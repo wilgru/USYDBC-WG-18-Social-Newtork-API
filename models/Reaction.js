@@ -6,6 +6,11 @@ const reactionSchema = new Schema({
         type: SchemaTypes.ObjectId,
         default: () => new ObjectId()
     },
+    reactionBody: {
+        type: String,
+        required: true,
+        maxLength: 280
+    },
     username: {
         type: String,
         required: true
