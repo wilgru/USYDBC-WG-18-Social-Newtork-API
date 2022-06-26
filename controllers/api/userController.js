@@ -38,7 +38,7 @@ router.put('/:userid', async (req, res) => {
         const user = await User.where('_id').equals(req.params.userid);
         if (req.body.username) {user[0].username = req.body.username}
         if (req.body.email) {user[0].email = req.body.email}
-        await user[0].save();
+        await user.save();
         res.status(201).json(user);
     } catch (e) {
         console.log(e);
@@ -60,7 +60,7 @@ router.post('/:userid/friends/:friendId', async (req, res) => {
     try{
         const user = await User.where('_id').equals(req.params.userid);
         user[0].friends.push(req.params.friendId)
-        await user[0].save();
+        await user.save();
         res.status(201).json(user);
     } catch (e) {
         console.log(e);
