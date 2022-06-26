@@ -16,7 +16,7 @@ const thoughtSchema = new Schema({
     username: {
         type: String
     },
-    reactions: reactionSchema
+    reactions: [reactionSchema] // <- not working?
 });
 
 // create virtuals
