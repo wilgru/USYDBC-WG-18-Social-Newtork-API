@@ -42,7 +42,7 @@ router.put('/:userid', async (req, res) => {
         const thought = await Thought.where('_id').equals(req.params.thoughtid);
         if (req.body.username) {thought[0].username = req.body.username}
         if (req.body.thoughtText) {thought[0].thoughtText = req.body.thoughtText}
-        await thought[0].save();
+        await thought.save();
         res.status(201).json(thought);
     } catch (e) {
         console.log(e);
@@ -59,6 +59,33 @@ router.delete('/:thoughtid', async (req, res) => {
     }
 });
 
+// add new reaction
+router.post('/:thoughtid/reactions', (req, res) => {
+    try {
+        const thought = Thought.where('_id').equals(req.params.thoughtid);
+        thought[0].reactions.push(req.body);
+        thought.save();
 
+        res.status(201).json(thought);
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+// delete reaction
+router.delete('/:thoughtid/reactions/:reactionId', (req, res) => {
+    try {
+        const thought = Thought.where('_id').equals(req.params.thoughtid);
+        thought.findOneAndUpdate(
+            { _id: req.params.thoughtid },
+            { $pull: {reactions: req.body.reactionId} },
+            { runValidators: true, new: true }
+        );
+
+        res.status(200).json(thought);
+    } catch (e) {
+        console.log(e);
+    }
+})
 
 module.exports = router;
