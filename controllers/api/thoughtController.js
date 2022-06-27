@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 // get a thought by id
 router.get('/:thoughtId', async (req, res) => {
     try{
-        const thought = await User.where('_id').equals(req.params.thoughtId);
+        const thought = await Thought.where('_id').equals(req.params.thoughtId).populate('reactions');
 
         res.status(200).json(thought);
 
@@ -46,6 +46,8 @@ router.post('/', async (req, res) => {
 router.put('/:thoughtId', async (req, res) => {
     try{
         const thought = await Thought.where('_id').equals(req.params.thoughtId);
+
+        console.log(thought, thought[0])
 
         if (req.body.thoughtText) {thought[0].thoughtText = req.body.thoughtText}
         if (req.body.username) {thought[0].username = req.body.username}
@@ -95,7 +97,7 @@ router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
     try {
         const thought = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reactions: { _id: req.params.reactionId } } },
+            { $pull: { reactions: req.params.reactionId } },
             { runValidators: true, new: true }
         );
 
