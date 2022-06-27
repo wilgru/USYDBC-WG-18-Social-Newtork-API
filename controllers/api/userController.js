@@ -14,9 +14,9 @@ router.get('/', async (req, res) => {
 });
 
 // get a user by id
-router.get('/:userid', async (req, res) => {
+router.get('/:userId', async (req, res) => {
     try{
-        const users = await User.where('_id').equals(req.params.userid).populate('friends');
+        const users = await User.where('_id').equals(req.params.userId).populate('thoughts').populate('friends');
         res.status(200).json(users);
     } catch (e) {
         console.log(e);
@@ -36,9 +36,9 @@ router.post('/', async (req, res) => {
 });
 
 // update user
-router.put('/:userid', async (req, res) => {
+router.put('/:userId', async (req, res) => {
     try{
-        const user = await User.where('_id').equals(req.params.userid);
+        const user = await User.where('_id').equals(req.params.userId);
         if (req.body.username) {user[0].username = req.body.username}
         if (req.body.email) {user[0].email = req.body.email}
         await user[0].save();
@@ -50,9 +50,9 @@ router.put('/:userid', async (req, res) => {
 });
 
 // delete user
-router.delete('/:userid', async (req, res) => {
+router.delete('/:userId', async (req, res) => {
     try{
-        const deletedUser = await User.deleteOne({ _id: req.params.userid })
+        const deletedUser = await User.deleteOne({ _id: req.params.userId })
         res.status(200).json(deletedUser);
     } catch (e) {
         console.log(e);
@@ -61,9 +61,9 @@ router.delete('/:userid', async (req, res) => {
 });
 
 // add friend to user
-router.post('/:userid/friends/:friendId', async (req, res) => {
+router.post('/:userId/friends/:friendId', async (req, res) => {
     try{
-        const user = await User.where('_id').equals(req.params.userid);
+        const user = await User.where('_id').equals(req.params.userId);
         user[0].friends.push(req.params.friendId)
         await user[0].save();
         res.status(201).json(user);
@@ -74,11 +74,11 @@ router.post('/:userid/friends/:friendId', async (req, res) => {
 });
 
 // remove friend from user
-router.delete('/:userid/friends/:friendId', async (req, res) => {
+router.delete('/:userId/friends/:friendId', async (req, res) => {
     try{
         const user = await User.findOneAndUpdate(
-            { _id: req.params.userid },
-            { $pull: { friends: { _id: req.params.friendId } } },
+            { _id: req.params.userId },
+            { $pull: { friends: req.params.friendId } },
             { runValidators: true, new: true }
         );
         res.status(201).json(user);
