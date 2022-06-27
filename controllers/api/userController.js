@@ -9,6 +9,7 @@ router.get('/', async (req, res) => {
         res.status(200).json(users);
     } catch (e) {
         console.log(e);
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -19,6 +20,7 @@ router.get('/:userid', async (req, res) => {
         res.status(200).json(users);
     } catch (e) {
         console.log(e);
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -29,6 +31,7 @@ router.post('/', async (req, res) => {
         res.status(201).json(newUser);
     } catch (e) {
         console.log(e);
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -42,6 +45,7 @@ router.put('/:userid', async (req, res) => {
         res.status(201).json(user);
     } catch (e) {
         console.log(e);
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -52,6 +56,7 @@ router.delete('/:userid', async (req, res) => {
         res.status(200).json(deletedUser);
     } catch (e) {
         console.log(e);
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -64,6 +69,7 @@ router.post('/:userid/friends/:friendId', async (req, res) => {
         res.status(201).json(user);
     } catch (e) {
         console.log(e);
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -78,6 +84,7 @@ router.delete('/:userid/friends/:friendId', async (req, res) => {
         res.status(201).json(user);
     } catch (e) {
         console.log(e);
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 

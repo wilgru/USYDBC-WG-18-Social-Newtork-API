@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
         res.status(200).json(thoughts);
     } catch (e) {
         console.log(e)
-        res.status(400).send('400 - error');
+        res.status(400).send(`400 - ${e.message}`);
     }
 })
 
@@ -16,10 +16,12 @@ router.get('/', async (req, res) => {
 router.get('/:thoughtId', async (req, res) => {
     try{
         const thought = await User.where('_id').equals(req.params.thoughtId);
+
         res.status(200).json(thought);
+
     } catch (e) {
         console.log(e)
-        res.status(400).send('400 - error');
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -36,7 +38,7 @@ router.post('/', async (req, res) => {
         res.status(201).json(newThought);
     } catch (e) {
         console.log(e)
-        res.status(400).send('400 - error');
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -44,13 +46,15 @@ router.post('/', async (req, res) => {
 router.put('/:thoughtId', async (req, res) => {
     try{
         const thought = await Thought.where('_id').equals(req.params.thoughtId);
+
         if (req.body.thoughtText) {thought[0].thoughtText = req.body.thoughtText}
         if (req.body.username) {thought[0].username = req.body.username}
         await thought[0].save();
+
         res.status(201).json(thought);
     } catch (e) {
         console.log(e)
-        res.status(400).send('400 - error');
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -61,7 +65,7 @@ router.delete('/:thoughtId', async (req, res) => {
         res.status(200).json(deletedThought);
     } catch (e) {
         console.log(e)
-        res.status(400).send('400 - error');
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -74,10 +78,15 @@ router.post('/:thoughtId/reactions', async (req, res) => {
             { new: true }
         );
 
+        // alternative approach
+        // const thought = await Thought.where('_id').equals(req.params.thoughtId);
+        // thought[0].reactions.push(req.body);
+        // thought[0].save();
+
         res.status(201).json(thought);
     } catch (e) {
         console.log(e)
-        res.status(400).send('400 - error');
+        res.status(400).send(`400 - ${e.message}`);
     }
 });
 
@@ -90,10 +99,19 @@ router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
             { runValidators: true, new: true }
         );
 
+        // alternative approach
+        // const thought = await Thought.where('_id').equals(req.params.thoughtId);
+        // thought[0].reactions = thought[0].reactions.filter(
+        //     (reaction) => { 
+        //         if (reaction.reactionId != req.params.reactionId) { return reaction } 
+        //     });
+        // thought[0].save();
+
         res.status(200).json(thought);
+
     } catch (e) {
-        console.log(e)
-        res.status(400).send('400 - error');
+        console.log(e.message)
+        res.status(400).send(`400 - ${e.message}`);
     }
 })
 
