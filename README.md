@@ -4,7 +4,7 @@
 
 ## Description
 
-This API 
+This API is a simple but fully functional social networking API, that stores users, thoughts and reactions. This API employs full CRUD functionality and is based on the NoSQL approach using MongoDB.
 
 ## Table of Contents
  
@@ -37,9 +37,9 @@ make sure you have all dependencies installed and have MongoDB installed as well
 <a name="Link"></a>
 ## Link and Demo 
 
-You can visit the deployed API [here](https://usydbc-18-social-API.herokuapp.com/).
+You can use the deployed API [here](https://usydbc-18-social-API.herokuapp.com/).
 
-You can also watch a demo of how to use the Ecommerce Backend [here]().
+You can also watch a demo of how to use the Social Network API [here](https://drive.google.com/file/d/11m926_clPBlFEO159LKRDz0LpD3iPAt-/view?usp=sharing).
 
 <a name="License"></a>
 ## License
